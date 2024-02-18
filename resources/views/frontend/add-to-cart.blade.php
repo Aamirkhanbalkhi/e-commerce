@@ -93,7 +93,7 @@
 
         {{-- JS Code --}}
 
-        <script>
+        {{-- <script>
             document.addEventListener('DOMContentLoaded', function () {
                 var cartInputs = document.querySelectorAll('.cart-input');
                 cartInputs.forEach(function (input) {
@@ -128,7 +128,7 @@
                     input.parentElement.nextElementSibling.querySelector('.amount').innerText = '₹ ' + subtotal.toFixed(2);
                 }
             });
-        </script>
+        </script> --}}
 
 
 
