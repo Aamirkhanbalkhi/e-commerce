@@ -60,14 +60,15 @@
                                             class="table table-centered table-nowrap table-borderless table-hover mb-0">
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <th style="width: 20px;">
+                                                    {{-- <th style="width: 20px;">
                                                         <div class="custom-control custom-checkbox">
                                                             <input type="checkbox" class="custom-control-input"
                                                                 id="customCheck1">
                                                             <label class="custom-control-label"
                                                                 for="customCheck1">&nbsp;</label>
                                                         </div>
-                                                    </th>
+                                                    </th> --}}
+                                                    <th>Sr No.</th>
                                                     <th>Seller Name</th>
                                                     <th>Store Name</th>
                                                     <th>Email</th>
@@ -83,14 +84,7 @@
                                                 @foreach ($sellers as $seller)
 
                                                 <tr>
-                                                    <td>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="customCheck2">
-                                                            <label class="custom-control-label"
-                                                                for="customCheck2">&nbsp;</label>
-                                                        </div>
-                                                    </td>
+                                                    <td>{{ $loop->iteration }}</td>
                                                     <td class="table-user">
                                                         <img src="{{ asset('assets/images/users/user-3.jpg') }}" alt="table-user"
                                                             class="mr-2 rounded-circle">
@@ -112,7 +106,7 @@
                                                     <td>
                                                         {{ $seller->account_creation_date }}
                                                     </td>
-                                                    
+
                                                     <td>
                                                     @if ($seller->status === 'active')
                                                     <span class="badge badge-soft-success">Active</span>

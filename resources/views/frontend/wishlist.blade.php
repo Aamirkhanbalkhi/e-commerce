@@ -4,8 +4,11 @@
 <main>
 
     <!-- breadcrumb-area-start -->
-    <div class="breadcrumb__area pt-5 pb-5">
+    <div class="breadcrumb__area pb-3">
         <div class="container">
+
+            @include('Includes.Admin.alert')
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="tp-breadcrumb__content">
@@ -31,11 +34,11 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th class="product-thumbnail">Images</th>
-                                        <th class="cart-product-name">Courses</th>
-                                        <th class="product-price">Unit Price</th>
+                                        <th class="product-thumbnail">Product Images</th>
+                                        <th class="cart-product-name">Product's Name</th>
+                                        <th class="product-price">Price</th>
                                         <th class="product-quantity">Quantity</th>
-                                        <th class="product-subtotal">Total</th>
+                                        <th class="product-subtotal">Total Price</th>
                                         <th class="product-add-to-cart">Add To Cart</th>
                                         <th class="product-remove">Remove</th>
                                     </tr>
@@ -44,15 +47,13 @@
                                     @foreach ($wishlistItems as $product)
                                     <tr>
                                         <td class="product-thumbnail">
-                                            <a href="shop-details.html">
-                                                <img src="{{('uploads/'. $product->product->image_url_1)}}" alt="">
-                                            </a>
+                                            <img src="{{('uploads/'. $product->product->image_url_1)}}" alt="">
                                         </td>
                                         <td class="product-name">
-                                            <a href="shop-details.html">{{$product->product->product_name}}</a>
+                                            <span>{{$product->product->product_name}}</span>
                                         </td>
                                         <td class="product-price">
-                                            <span class="amount">₹{{$product->product->price}}</span>
+                                            <span class="amount fw-bold"> ₹ {{$product->product->price}} </span>
                                         </td>
                                         <td class="product-quantity">
                                             <span class="cart-minus">-</span>
@@ -60,16 +61,15 @@
                                             <span class="cart-plus">+</span>
                                         </td>
                                         <td class="product-subtotal">
-                                            <span class="amount">$130.00</span>
+                                            <span class="amount fw-bold"> ₹ 789.00 </span>
                                         </td>
                                         <td class="product-add-to-cart">
-                                            <button class="tp-btn tp-color-btn  tp-wish-cart banner-animation">Add To
-                                                Cart</button>
+                                        <button class="tp-btn tp-color-btn tp-wish-cart banner-animation">Add To
+                                            Cart</button>
                                         </td>
                                         <td class="product-remove">
-                                            <a href="{{ route('removeToWishlist', $product->id) }}">
-                                                <i class="fa fa-times"></i>
-                                            </a>
+                                        <a href="{{ route('removeToWishlist', $product->id) }}" onclick="return confirm('Are You sure you want to Delete Wishlist ?');">
+                                            <i class="fa fa-trash text-black"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach

@@ -11,12 +11,12 @@
             <div class="row">
                 <div class="col-10">
                     <div class="page-title-box">
-                        <h4 class="page-title">Categories</h4>
+                        <h4 class="page-title">Banners</h4>
                     </div>
                 </div>
                 <div class="col-2">
                     <div class="page-title-box">
-                        <a href="{{route('addbanner')}}" class="btn btn-success waves-effect waves-light mt-3"><i class="mdi mdi-plus-circle mr-1"></i>New Category</a>
+                        <a href="{{route('addbanner')}}" class="btn btn-success waves-effect waves-light mt-3"><i class="mdi mdi-plus-circle mr-1"></i>Add New Banner</a>
                     </div>
                 </div>
             </div>
@@ -46,8 +46,8 @@
                             <table class="table table-hover text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th width="60">ID</th>
-                                        <th></th>
+                                        <th>ID</th>
+                                        <th>Banner Images</th>
                                         <th>Title</th>
                                         <th>Heading</th>
                                         <th>Description</th>
@@ -73,10 +73,10 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{route('edit.banner', $banner->id)}}">
-                                                <i data-feather="edit-2"></i>
+                                            <a href="{{route('edit.banner', $banner->id)}}" class="text-info">
+                                                <i data-feather="edit"></i>
                                             </a>
-                                            <a onclick="return confirm('Are your sure?')" href="{{route('delete.banner', $banner->id)}}" class="text-danger w-4 h-4 mr-1">
+                                            <a onclick="return confirm('Are your sure! yout want to Delete Banner ?')" href="{{route('delete.banner', $banner->id)}}" class="text-danger w-4 h-4 mr-1">
                                                 <i data-feather="trash-2"></i>
                                             </a>
                                         </td>

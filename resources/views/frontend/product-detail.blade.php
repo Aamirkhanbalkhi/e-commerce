@@ -1,3 +1,5 @@
+
+
 @extends('layout.frontend')
 
 @section('content')
@@ -14,7 +16,6 @@
                             <span class="tp-breadcrumb__active"><a href="{{route('home.page')}}">Home</a></span>
                             <span class="dvdr">/</span>
                             <span class="tp-breadcrumb__active"><a href="{{route('product.list', [$productDetail->category->category_slug])}}">{{$productDetail->category->category_name}}</a></span>
-                            <span class="dvdr">/</span>
                         </div>
                     </div>
                 </div>
@@ -22,8 +23,6 @@
         </div>
     </div>
     <!-- breadcrumb-area-end -->
-
-
 
     <!-- shop-detailsarea-start -->
     @if (isset($productDetail ))
@@ -33,7 +32,9 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <!-- ALERT MSG  -->
+
                     @include('Includes.Admin.alert')
+
                     <div class="tpdetails__area mr-60 pb-30">
                         <div class="tpdetails__product mb-30">
                             <div class="tpdetails__title-box">
@@ -60,9 +61,9 @@
                                             <div class="tab-content" id="nav-tabContents">
                                                 <div class="tab-pane fade show active w-img" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
                                                     <img src="{{asset('uploads/'. $productDetail->image_url_1)}}" alt="">
-                                                    <!-- <div class="tpproduct__info bage">
+                                                     <div class="tpproduct__info bage">
                                                         <span class="tpproduct__info-hot bage__hot">HOT</span>
-                                                    </div> -->
+                                                    </div>
                                                 </div>
                                                 <div class="tab-pane fade w-img" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
                                                     <img src="{{asset('uploads/'. $productDetail->image_url_2)}}" alt="">
@@ -116,14 +117,13 @@
                                                     </button>
                                                     @endif
                                                 </div>
-
                                             </nav>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="product__details">
                                             <div class="product__details-price-box">
-                                                <h5 class="product__details-price">₹{{$productDetail->price}}</h5>
+                                                <h5 class="product__details-price"> ₹ {{$productDetail->price}} </h5>
                                                 <ul class="product__details-info-list">
                                                     <li>{!! $productDetail->product_details !!}</li>
                                                 </ul>
@@ -137,12 +137,12 @@
                                                         <span class="cart-plus"><i class="far fa-plus"></i></span>
                                                     </div>
                                                     <div class="product__details-btn">
-                                                        <a href="{{route('add.cart',$productDetail->id)}}">add to cart</a>
+                                                        <a href="{{ route('add.cart', $productDetail->id) }}">add to cart</a>
                                                     </div>
                                                 </div>
                                                 <ul class="product__details-check">
                                                     <li>
-                                                        <a href="{{route('add.wishlist',$productDetail->id)}}"><i class="icon-heart icons"></i> add to wishlist</a>
+                                                        <a href="{{ route('add.wishlist',$productDetail->id) }}"><i class="icon-heart icons"></i> add to wishlist</a>
                                                     </li>
                                                     <li>
                                                         <a href="#"><i class="icon-layers"></i> Add to Compare</a>

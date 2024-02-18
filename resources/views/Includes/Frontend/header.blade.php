@@ -57,14 +57,23 @@
                         </div>
                         <div class="col-xl-4">
                             <div class="header__info d-flex align-items-center justify-content-end">
-                                <div class="header__info-cart tpcolor__greenish ml-10 tp-cart-toggle">
+
+                                <div class="header__info-cart tpcolor__oasis ml-1">
+                                    <a href="{{route('cart')}}"><i><img src="{{asset('webside/assets/img/icon/cart-1.svg')}}" alt=""></i></a>
+                                    <span>{{$cartno}}</span>
+                                </div>
+
+                                <div class="header__info-wishlist wishlistCount tpcolor__greenish ml-1">
+                                    <a href=" {{ route('wishlist') }} " style="text-decoration:none;"><i class="icon-heart"></i>
+                                        <span>{{$wishlistno}}</span>
+                                    </a>
+                                </div>
+
+                                <div class="header__info-user tpcolor__yellow ml-1 tp-cart-toggle">
                                     <a href="#"><i class="icon-user"></i> </a>
                                 </div>
-                                <div class="header__info-wishlist wishlistCount tpcolor__yellow ml-10">
-                                    <a href="{{route('wishlist')}}"><i class="icon-heart"></i> </a>
-                                    <span>{{$wishlistno}}</span>
-                                </div>
-                                <div class="header__info-logout tpcolor__greenish ml-10 ">
+
+                                <div class="header__info-logout tpcolor__greenish ml-1">
                                     <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">
                                         <i class="fas fa-sign-out-alt"></i>
@@ -73,10 +82,7 @@
                                         @csrf
                                     </form>
                                 </div>
-                                <div class="header__info-cart tpcolor__oasis ml-10 ">
-                                    <a href="{{route('cart')}}"><i><img src="{{asset('webside/assets/img/icon/cart-1.svg')}}" alt=""></i></a>
-                                    <span>{{$cartno}}</span>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -86,7 +92,11 @@
                                 <nav id="mobile-menu">
                                     <ul>
                                         @foreach ($categorys as $category)
-                                        <li> <a href="{{route('product.list', [$category->category_slug])}}">{{$category->category_name}}</a></li>
+                                        <li>
+                                        <a href="{{ route('product.list', [$category->category_slug]) }}" style="text-decoration: none;">
+                                            {{$category->category_name}}
+                                        </a>
+                                        </li>
                                         @endforeach
                                     </ul>
                                 </nav>
@@ -112,6 +122,7 @@
                 right: 112px;
             }
         </style>
+
         <!-- header-cart-start -->
         <div id="header-cart" class="tpcartinfo tp-cart-info-area p-relative">
             <div class="tpcart">

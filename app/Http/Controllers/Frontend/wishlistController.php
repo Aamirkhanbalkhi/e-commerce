@@ -15,27 +15,28 @@ use function PHPUnit\Framework\countOf;
 
 class wishlistController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    // SHOW WISHLIST FUNCTION
+    ## Function to Show all-Wishlist
+
     public function wishlist()
     {
-        $categorys = Category::all();
-        $cartno =  cart::where('user_id', auth()->id())->count();
-        $wishlistno =  wishlist::where('user_id', auth()->id())->count();
-        $wishlistItems = Wishlist::where('user_id', auth()->id())->with('product')->get();
+        $data['categorys'] = Category::all();
+        $data['cartno'] =  cart::where('user_id', auth()->id())->count();
+        $data['wishlistno'] =  wishlist::where('user_id', auth()->id())->count();
+        $data['wishlistItems'] = Wishlist::where('user_id', auth()->id())->with('product')->get();
         // dd($wishlistno);
-        return view('frontend.wishlist', compact('categorys', 'wishlistItems', 'wishlistno', 'cartno'));
+
+        return view('frontend.wishlist', $data);
     }
 
-    // ADD TO WISHLIST FUNCTION
+    ## Function to add-Wishlist
+
     public function addWishlist(Request $request, $productId)
     {
-
         $existingWishlist = Wishlist::where('user_id', auth()->id())
             ->where('product_id', $productId)
             ->first();
@@ -54,39 +55,39 @@ class wishlistController extends Controller
         return redirect()->back()->withStatus('Product added to wishlist.');
     }
 
-    // REMOVE WISHLIST FUNCTION
+    ## Function to remove Wishlist
+
     public function removeWishlist($wishlistId)
     {
-
         $wishlist = Wishlist::where('id', $wishlistId);
         if ($wishlist) {
             $wishlist->delete();
         }
-        return redirect()->route('wishlist');
+        return redirect()->route('wishlist')->withStatus('Your Wishlist Deleted!');
     }
 
-    // SHOW CART FUNCTION
+    ## Function to Show Cart Details
+
     public function cart()
     {
-
         // $data = wishlist::join('products', 'products.id', '=', 'wishlists.product_id')
         //     ->where('wishlists.user_id', auth()->id())
         //     ->get();
         // dd($data);
 
-        $categorys = Category::all();
-        $wishlistno =  wishlist::where('user_id', auth()->id())->count();
-        $cartno =  cart::where('user_id', auth()->id())->count();
-        $cartitems = cart::where('user_id', auth()->id())->with('product')->get();
+        $data['categorys'] = Category::all();
+        $data['wishlistno'] =  wishlist::where('user_id', auth()->id())->count();
+        $data['cartno'] =  cart::where('user_id', auth()->id())->count();
+        $data['cartitems'] = cart::where('user_id', auth()->id())->with('product')->get();
         // dd($cartitems);
-        return view('frontend.add-to-cart', compact('categorys', 'cartitems', 'cartno', 'wishlistno'));
+
+        return view('frontend.add-to-cart', $data);
     }
 
+    ## Function to add to cart
 
-    // ADD TO CART FUNCTION
     public function addToCart(Request $request, $productId)
     {
-
         $existingWishlist = cart::where('user_id', auth()->id())
             ->where('product_id', $productId)
             ->first();
@@ -101,18 +102,19 @@ class wishlistController extends Controller
             'user_id' => auth()->id(),
             'product_id' => $productId,
         ]);
+
         // dd($a);
         return redirect()->back()->withStatus('Product added to cart.');
     }
 
-    // REMOVE WISHLIST FUNCTION
+    ## Function to Remove Cart
+
     public function removeCart($cartId)
     {
-
         $cart = cart::where('id', $cartId);
         if ($cart) {
             $cart->delete();
         }
-        return redirect()->route('cart');
+        return redirect()->route('cart')->withStatus('Your Cart Delete!');
     }
 }

@@ -52,14 +52,15 @@
                                             id="products-datatable">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 20px;">
+                                                    {{-- <th style="width: 20px;">
                                                         <div class="custom-control custom-checkbox">
                                                             <input type="checkbox" class="custom-control-input"
                                                                 id="customCheck1">
                                                             <label class="custom-control-label"
                                                                 for="customCheck1">&nbsp;</label>
                                                         </div>
-                                                    </th>
+                                                    </th> --}}
+                                                    <th>Sr No.</th>
                                                     <th>Name</th>
                                                     <th>Email</th>
                                                     <th>Phone</th>
@@ -73,14 +74,8 @@
                                             <tbody>
                                                     @foreach ($customers as $customer)
                                                 <tr>
-                                                    <td>
-                                                        <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input"
-                                                                id="customCheck2">
-                                                            <label class="custom-control-label"
-                                                                for="customCheck2"></label>
-                                                        </div>
-                                                    </td>
+                                                    <td>{{ $loop->iteration }}</td> {{-- yeah Laravel ka concept h No. wise show--}}
+
                                                     <td class="table-user">
                                                         <img src="{{ asset('assets/images/users/user-4.jpg') }}" alt="table-user"
                                                             class="mr-2 rounded-circle">

@@ -7,8 +7,8 @@
                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                         <div class="tpfooter__widget footer-col-1 mb-50">
                             <h4 class="tpfooter__widget-title">Let Us Help You</h4>
-                            <p>If you have any question, please <br> contact us at:
-                                <a href="mailto:support@example.com">support@example.com</a>
+                            <p>If you have any question, <br> contact us at:
+                                abc@example.com
                             </p>
                             <div class="tpfooter__widget-social mt-45">
                                 <span class="tpfooter__widget-social-title mb-5">Social Media:</span>
@@ -23,11 +23,11 @@
                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                         <div class="tpfooter__widget footer-col-2 mb-50">
                             <h4 class="tpfooter__widget-title">Looking for Orfarm?</h4>
-                            <p>68 St. Vicent Place, Glasgow, Greater <br> Newyork NH2012, UK.</p>
+                            <p>68 St. Vicent Place, Glasgow, <br> Newyork NH2012, UK.</p>
                             <div class="tpfooter__widget-time-info mt-35">
+                                <br>
                                 <span>Monday – Friday: <b>8:10 AM – 6:10 PM</b></span>
                                 <span>Saturday: <b>10:10 AM – 06:10 PM</b></span>
-                                <span>Sunday: <b>Close</b></span>
                             </div>
                         </div>
                     </div>

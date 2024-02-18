@@ -1,3 +1,4 @@
+
 @extends('layout.frontend')
 
 @section('content')
@@ -10,7 +11,7 @@
             <div class="swiper-wrapper">
                 @foreach ($banners as $banner)
                 <div class="swiper-slide">
-                    <div class="tpslider grey-bg">
+                    <div class="tpslider white-bg">
                         <div class="container">
                             <div class="row align-items-center">
                                 <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-7 mt-5">
@@ -46,7 +47,7 @@
     <!-- feature-area-start -->
     <section class="feature-area whight-feature grey-bg feature-top">
         <div class="container">
-            <div class="feature-bg-round white-bg pt-50 pb-15">
+            <div class="feature-bg-round pt-50 pb-15">
                 <div class="tpfeature-border">
                     <div class="row row-cols-lg-5 row-cols-md-3 row-cols-1">
                         <div class="col">
@@ -117,12 +118,12 @@
         <div class="container">
             <div class="sections__wrapper white-bg pr-50 pl-50">
                 <div class="row align-items-center">
-                    <div class="col-md-6 text-center">
+                    <div class="col-md-6 text-center mt-20">
                         <div class="tpsection mb-15">
                             <h4 class="tpsection__title text-start brand-product-title">{{ $categoryName }} Products</h4>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-20">
                         <div class="tpproduct__all-item">
                             @if($products->isNotEmpty())
                             <a href="{{route('product.list', ['categoryName' => $products->first()->category_slug])}}">View All <i class="icon-chevron-right"></i></a>
@@ -136,20 +137,22 @@
                             <div class="tpproduct__arrow p-relative">
                                 <div class="swiper-container tpproduct-active-2 tpslider-bottom p-relative">
                                     <div class="swiper-wrapper">
+
                                         @foreach($products as $product)
+
                                         <div class="swiper-slide">
                                             <div class="tpproduct p-relative tpprogress__hover">
                                                 <div class="tpproduct__thumb p-relative text-center">
-                                                    <a href="{{route('product.detail')}}"><img src="{{ asset('uploads/' . $product->image_url_1) }}" alt=""></a>
-                                                    <a class="tpproduct__thumb-img" href="{{route('product.detail',$product->reference)}}"><img src="{{ asset('uploads/' . $product->image_url_2) }}" alt=""></a>
+                                                    <a href="{{ route('product.detail', $product->reference) }}"><img src="{{ asset('uploads/' . $product->image_url_1) }}" alt=""></a>
+                                                    <a class="tpproduct__thumb-img" href="{{ route('product.detail',$product->reference) }}"><img src="{{ asset('uploads/' . $product->image_url_2) }}" alt=""></a>
                                                     <!-- Other product details -->
                                                 </div>
                                                 <div class="tpproduct__content">
-                                                    <a href="{{route('product.detail',$product->reference)}}">{{ $product->product_name }}</a>
+                                                    <a href="{{ route('product.detail', $product->reference) }}">{{ $product->product_name }}</a>
                                                     <h4 class="tpproduct__title">
-                                                        <a href="{{route('product.detail',$product->reference)}}">{{ $product->title }}</a>
+                                                        <a href="{{ route('product.detail', $product->reference) }}">{{ $product->title }}</a>
                                                     </h4>
-                                                    <div class="tpproduct__rating mb-5">
+                                                    <div class="tpproduct__rating">
                                                         <!-- You can place rating stars here -->
                                                     </div>
                                                     <div class="tpproduct__price mb-5">
@@ -168,9 +171,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="tpproduct__hover-text">
-                                                    <div class="tpproduct__hover-btn d-flex justify-content-center mb-10">
-                                                        <a class="tp-btn-2" href="#">Add to cart</a>
-                                                    </div>
+                                                    {{-- <div class="tpproduct__hover-btn d-flex justify-content-center">
+                                                        <a class="tp-btn" href="#">Add to cart</a>
+                                                    </div> --}}
                                                     <div class="tpproduct__descrip">
                                                         <ul>
                                                             <li>Type: {!! $product->product_details !!}</li>
@@ -193,9 +196,6 @@
     </section>
     @endforeach
     <!-- product-area-end -->
-
-
 </main>
-
 
 @endsection

@@ -81,15 +81,15 @@ Route::group(['prefix' => 'admin'], function () {
 
 // WEBSITE ROUTES
 
-route::match(['get', 'post'], '/index', [homeController::class, 'home'])->name('home.page');
+route::match(['get', 'post'], '/shop-home', [homeController::class, 'home'])->name('home.page');
 route::match(['get', 'post'], '/about', [homeController::class, 'about'])->name('about.page');
 route::match(['get', 'post'], '/contact-us', [homeController::class, 'contact'])->name('contact.page');
 route::match(['get', 'post'], '/product-list/{categoryName}', [homeController::class, 'productList'])->name('product.list');
 route::match(['get', 'post'], '/product-detail/{productDetail?}', [homeController::class, 'productDetails'])->name('product.detail');
-route::match(['get', 'post'], '/wishlist', [wishlistController::class, 'wishlist'])->name('wishlist');
+route::match(['get', 'post'], '/shop-wishlist', [wishlistController::class, 'wishlist'])->name('wishlist');
 route::match(['get', 'post'], '/add-wishlist/{id?}', [wishlistController::class, 'addWishlist'])->name('add.wishlist');
 route::match(['get', 'post'], '/remove-wishlist/{wishlistId}', [wishlistController::class, 'removeWishlist'])->name('removeToWishlist');
-route::match(['get', 'post'], '/cart', [wishlistController::class, 'cart'])->name('cart');
+route::match(['get', 'post'], '/shop-cartlists', [wishlistController::class, 'cart'])->name('cart');
 route::match(['get', 'post'], '/add-to-cart/{id?}', [wishlistController::class, 'addToCart'])->name('add.cart');
 route::match(['get', 'post'], '/remove-cart/{cartId}', [wishlistController::class, 'removeCart'])->name('removeToCart');
 

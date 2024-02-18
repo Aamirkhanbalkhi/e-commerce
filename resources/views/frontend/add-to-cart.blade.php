@@ -4,8 +4,9 @@
 <main>
 
     <!-- breadcrumb-area-start -->
-    <div class="breadcrumb__area pt-5 pb-5">
+    <div class="breadcrumb__area pb-3">
         <div class="container">
+            @include('Includes.Admin.alert')
             <div class="row">
                 <div class="col-lg-12">
                     <div class="tp-breadcrumb__content">
@@ -31,28 +32,27 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th class="product-thumbnail">Images</th>
-                                        <th class="cart-product-name">Courses</th>
-                                        <th class="product-price">Unit Price</th>
+                                        <th class="product-thumbnail">Product Images</th>
+                                        <th class="cart-product-name">Product's Name</th>
+                                        <th class="product-price">Price</th>
                                         <th class="product-quantity">Quantity</th>
                                         <th class="product-subtotal">Total</th>
                                         <th class="product-remove">Remove</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+
                                     @foreach ($cartitems as $item)
 
                                     <tr>
                                         <td class="product-thumbnail">
-                                            <a href="shop-details.html">
-                                                <img src="{{('uploads/'. $item->product->image_url_1)}}" alt="">
-                                            </a>
+                                            <img src="{{('uploads/'. $item->product->image_url_1)}}" alt="">
                                         </td>
                                         <td class="product-name">
-                                            <a href="shop-details.html">{{$item->product->product_name}}</a>
+                                            <span> {{$item->product->product_name}} </span>
                                         </td>
                                         <td class="product-price">
-                                            <span class="amount">₹{{$item->product->price}}</span>
+                                            <span class="amount fw-bold"> ₹ {{$item->product->price}} </span>
                                         </td>
                                         <td class="product-quantity">
                                             <span class="cart-minus">-</span>
@@ -60,29 +60,16 @@
                                             <span class="cart-plus">+</span>
                                         </td>
                                         <td class="product-subtotal">
-                                            <span class="amount">$130.00</span>
+                                            <span class="amount fw-bold"> ₹ 789.00 </span>
                                         </td>
                                         <td class="product-remove">
-                                            <a href="{{route('removeToCart', $item->id)}}"><i class="fa fa-times"></i></a>
+                                            <a href="{{ route('removeToCart', $item->id) }}" onclick="return confirm('Are You sure you want to Delete Cart ?');">
+                                            <i class="fa fa-trash text-black"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="coupon-all">
-                                    <div class="coupon">
-                                        <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Coupon code" type="text">
-                                        <button class="tp-btn tp-color-btn banner-animation" name="apply_coupon" type="submit">Apply
-                                            Coupon</button>
-                                    </div>
-                                    <div class="coupon2">
-                                        <button class="tp-btn tp-color-btn banner-animation" name="update_cart" type="submit">Update cart</button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="row justify-content-end">
                             <div class="col-md-5 ">
@@ -103,6 +90,46 @@
         </div>
     </section>
     <!-- cart area end-->
+
+        {{-- JS Code --}}
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var cartInputs = document.querySelectorAll('.cart-input');
+                cartInputs.forEach(function (input) {
+                    var minusButton = input.parentElement.querySelector('.cart-minus');
+                    var plusButton = input.parentElement.querySelector('.cart-plus');
+
+                    minusButton.addEventListener('click', function () {
+                        var inputField = this.parentElement.querySelector('input');
+                        var currentValue = parseInt(inputField.value);
+                        if (currentValue > 1) {
+                            inputField.value = currentValue - 1;
+                            updateSubtotal(inputField);
+                        }
+                    });
+
+                    plusButton.addEventListener('click', function () {
+                        var inputField = this.parentElement.querySelector('input');
+                        var currentValue = parseInt(inputField.value);
+                        inputField.value = currentValue + 1;
+                        updateSubtotal(inputField);
+                    });
+
+                    input.addEventListener('change', function () {
+                        updateSubtotal(this);
+                    });
+                });
+
+                function updateSubtotal(input) {
+                    var quantity = parseInt(input.value);
+                    var pricePerUnit = parseFloat(input.parentElement.nextElementSibling.querySelector('.amount').innerText.replace('₹', '').trim());
+                    var subtotal = quantity * pricePerUnit;
+                    input.parentElement.nextElementSibling.querySelector('.amount').innerText = '₹ ' + subtotal.toFixed(2);
+                }
+            });
+        </script>
+
 
 
     <!-- feature-area-start -->
