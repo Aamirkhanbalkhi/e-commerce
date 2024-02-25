@@ -6,6 +6,7 @@ use App\Models\wishlist;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use App\Models\cart;
 
 class product extends Model
 {
@@ -75,4 +76,8 @@ class product extends Model
     {
         return $this->hasMany(wishlist::class);
     }
+    // public function carts()
+    // {
+    //     return $this->hasMany(cart::class);
+    // }
 }

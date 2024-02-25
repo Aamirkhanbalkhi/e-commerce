@@ -6,6 +6,10 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Orfarm - Multipurpose eCommerce HTML5 Template </title>
     <meta name="description" content="">
+
+    {{-- AJAX k liyen csrf-token --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Place favicon.ico in the root directory -->
@@ -18,7 +22,7 @@
     <link rel="stylesheet" href="{{asset('webside/assets/css/slick.css')}}">
     <link rel="stylesheet" href="{{asset('webside/assets/css/magnific-popup.css')}}">
     <link rel="stylesheet" href="{{asset('webside/assets/css/spacing.css')}}">
-    <link rel="stylesheet" href="{{asset('webside//css/meanmenu.css')}}">
+    <link rel="stylesheet" href="{{asset('webside/assets/css/meanmenu.css')}}">
     <link rel="stylesheet" href="{{asset('webside/assets/css/nice-select.css')}}">
     <link rel="stylesheet" href="{{asset('webside/assets/css/fontawesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('webside/assets/css/icon-dukamarket.css')}}">

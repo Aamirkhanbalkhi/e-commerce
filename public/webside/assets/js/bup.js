@@ -4,7 +4,7 @@ $.fn.BUP = function (brother, beishu) {
 	console.log(this) // this为 $() 选择器选择的jQuery对象
   var $element = this;
   var $className = $element.attr('class');
-  var $class1, $brother; // class 与 brother 变量 
+  var $class1, $brother; // class 与 brother 变量
 	// If the target element is not an image
 	// 首先判断这个挂载元素是不是一个img标签
 	if (!$element.is('img')) {
@@ -36,7 +36,7 @@ $.fn.BUP = function (brother, beishu) {
 		background: '#FFF', // 背景颜色
 		shadow: '0 8px 17px 0 rgba(0, 0, 0, 1)',  // 放大镜边缘阴影
 		border: '6px solid #FFF',  // 放大镜边框
-		cursor: true,  // 
+		cursor: true,  //
 		zIndex: 999999,  // 设置层级
 	}
 
@@ -49,7 +49,7 @@ $.fn.BUP = function (brother, beishu) {
 	$element.on('dragstart', function (e) {
 		e.preventDefault()
   })
-  // 
+  //
 	$element.css('cursor', $options.cursor ? 'crosshair' : 'none')
 
 	// Create magnification lens element
@@ -98,7 +98,7 @@ $.fn.BUP = function (brother, beishu) {
     // Relative coordinates of image
     // relX, relY
 		var relX = e.offsetX  // 当前鼠标位置 距离父元素的距离
-    var relY = e.offsetY  // 
+    var relY = e.offsetY  //
     // console.log(relX);
     // console.log(relY);
     // Zoomed image coordinates
@@ -128,7 +128,7 @@ $.fn.BUP = function (brother, beishu) {
 			default:
 				bgSize = NATIVE_IMG.width
     }
-    
+
 		// 尝试使用滚轮控制放大
 		document.onmousewheel = function (e) {
 			e = event || window.event

@@ -18,10 +18,19 @@ class cart extends Model
     protected $fillable = [
         'user_id',
         'product_id',
+        'quantity',
     ];
 
     public function product()
     {
         return $this->belongsTo(product::class);
+    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+    public function wishlist()
+    {
+        return $this->hasMany(wishlist::class);
     }
 }

@@ -1,6 +1,12 @@
 @extends('layout.frontend')
 
 @section('content')
+
+<head>
+        {{-- AJAX k liyen csrf-token --}}
+    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
+
+</head>
 <main>
 
     <!-- breadcrumb-area-start -->
@@ -27,60 +33,73 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <form action="#">
+                    <form action="{{ route('update.Quantity')}}" method="POST">
+                        @csrf
+
                         <div class="table-content table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th class="product-thumbnail">Product Images</th>
-                                        <th class="cart-product-name">Product's Name</th>
-                                        <th class="product-price">Price</th>
-                                        <th class="product-quantity">Quantity</th>
-                                        <th class="product-subtotal">Total</th>
-                                        <th class="product-remove">Remove</th>
+                                        <th>Product Images</th>
+                                        <th>Product's Name</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th>Remove</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     @foreach ($cartitems as $item)
-
-                                    <tr>
+                                    <tr class="product-row">
                                         <td class="product-thumbnail">
-                                            <img src="{{('uploads/'. $item->product->image_url_1)}}" alt="">
+                                            <img src="{{ asset('uploads/'. $item->product->image_url_1) }}" alt="">
                                         </td>
                                         <td class="product-name">
                                             <span> {{$item->product->product_name}} </span>
                                         </td>
-                                        <td class="product-price">
-                                            <span class="amount fw-bold"> ₹ {{$item->product->price}} </span>
+                                        <td class="price">
+                                            <span class="price fw-bold">
+                                                <i class="fas fa-rupee-sign"></i>
+                                                {{$item->product->price}}
+                                            </span>
                                         </td>
+
                                         <td class="product-quantity">
-                                            <span class="cart-minus">-</span>
-                                            <input class="cart-input" type="text" value="1">
-                                            <span class="cart-plus">+</span>
+                                            <button id="cart-minus" type="button" data-product-id="{{ $item->id }}">-</button>
+                                            <input class="cart-input" type="text" value="1" style="text-align: center;" name="quantity">
+                                            <button id="cart-plus" type="button" data-product-id="{{ $item->id }}">+</button>
                                         </td>
+
                                         <td class="product-subtotal">
-                                            <span class="amount fw-bold"> ₹ 789.00 </span>
+                                            <i class="fas fa-rupee-sign"></i>
+                                            <span class="amount" data-product-price="{{ $item->product->price }}">{{ $item->product->price }}</span>
                                         </td>
+
                                         <td class="product-remove">
                                             <a href="{{ route('removeToCart', $item->id) }}" onclick="return confirm('Are You sure you want to Delete Cart ?');">
-                                            <i class="fa fa-trash text-black"></i></a>
+                                                <i class="fa fa-trash text-black"></i>
+                                            </a>
                                         </td>
                                     </tr>
-                                    @endforeach
+                                @endforeach
+
                                 </tbody>
                             </table>
                         </div>
                         <div class="row justify-content-end">
-                            <div class="col-md-5 ">
+                            <div class="col-md-5">
                                 <div class="cart-page-total">
                                     <h2>Cart totals</h2>
-                                    <ul class="mb-20">
-                                        <li>Subtotal <span>$250.00</span></li>
-                                        <li>Total <span>$250.00</span></li>
-                                    </ul>
-                                    <a href="checkout.html" class="tp-btn tp-color-btn banner-animation">Proceed to
-                                        Checkout</a>
+                                <ul class="mb-20">
+                                    <li><b>Grand Total</b><span class="total">
+                                        <i class="fas fa-rupee-sign"></i>
+                                    <span id="total-amount">0.00</span>
+                                    <input type="text" id="grand-total-input" class="grand_total" value="1">
+                                    </span></li>
+                                </ul>
+                                    <a href="{{ route('show.product') }}" class="tp-btn tp-color-btn banner-animation">Proceed to
+                                    Checkout</a>
                                 </div>
                             </div>
                         </div>
@@ -93,44 +112,111 @@
 
         {{-- JS Code --}}
 
-        {{-- <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var cartInputs = document.querySelectorAll('.cart-input');
-                cartInputs.forEach(function (input) {
-                    var minusButton = input.parentElement.querySelector('.cart-minus');
-                    var plusButton = input.parentElement.querySelector('.cart-plus');
+        <script>
+            // Get necessary elements using IDs
+            const cartInputs = document.querySelectorAll('.cart-input');
+            const cartMinusBtns = document.querySelectorAll('#cart-minus');
+            const cartPlusBtns = document.querySelectorAll('#cart-plus');
+            const amountSpans = document.querySelectorAll('.amount');
+            const totalSpan = document.querySelector('.total');
+            const totalAmountSpan = document.getElementById('total-amount');
 
-                    minusButton.addEventListener('click', function () {
-                        var inputField = this.parentElement.querySelector('input');
-                        var currentValue = parseInt(inputField.value);
-                        if (currentValue > 1) {
-                            inputField.value = currentValue - 1;
-                            updateSubtotal(inputField);
-                        }
-                    });
-
-                    plusButton.addEventListener('click', function () {
-                        var inputField = this.parentElement.querySelector('input');
-                        var currentValue = parseInt(inputField.value);
-                        inputField.value = currentValue + 1;
-                        updateSubtotal(inputField);
-                    });
-
-                    input.addEventListener('change', function () {
-                        updateSubtotal(this);
-                    });
+            // Function to update total
+            function updateTotal() {
+                let subtotal = 0;
+                // Calculate subtotal for each item
+                amountSpans.forEach(function(span, index) {
+                    let productPrice = parseFloat(span.getAttribute('data-product-price') || 0);
+                    let quantity = parseInt(cartInputs[index].value);
+                    let totalPerItem = productPrice * quantity;
+                    span.textContent = totalPerItem.toFixed(2); // Update amount span's value
+                    subtotal += totalPerItem;
                 });
+                // Update total value
+                totalSpan.innerHTML = '<i class="fas fa-rupee-sign"></i> ' + subtotal.toFixed(2);
 
-                function updateSubtotal(input) {
-                    var quantity = parseInt(input.value);
-                    var pricePerUnit = parseFloat(input.parentElement.nextElementSibling.querySelector('.amount').innerText.replace('₹', '').trim());
-                    var subtotal = quantity * pricePerUnit;
-                    input.parentElement.nextElementSibling.querySelector('.amount').innerText = '₹ ' + subtotal.toFixed(2);
-                }
+                // Update grand total
+                totalAmountSpan.textContent = subtotal.toFixed(2);
+            }
+
+            // Add event listeners for each item
+            cartPlusBtns.forEach(function(btn, index) {
+                btn.addEventListener('click', function() {
+                    let currentQuantity = parseInt(cartInputs[index].value);
+                    cartInputs[index].value = currentQuantity + 1; // Increment quantity by 1
+                    updateTotal(); // Update total after changing quantity
+
+
+                /*  AJAX Request Bhejna  */
+
+                let productId = btn.getAttribute('data-product-id');
+                let url = '/updateQuantity';        //  AJAX request ko bhejne wale URL ko set karta hai.
+                let params = 'product_id=' + productId + '&quantity=' + (currentQuantity + 1); // parameters ko construct karta hai jo AJAX request ke saath bheje jayenge.
+
+                console.log(params);
+
+                // CSRF token ko retrieve karta hai. Ye token CSRF protection ke liye zaroori hota hai jab AJAX ke zariye forms submit kiya jaata hai.
+                let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                //XMLHttpRequest object ka ek naya instance banata hai, jo browser se HTTP requests bhejne ke liye istemal hota hai.
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', url, true);    //request ko initialize karta hai. Isme HTTP method ('POST'), URL (url) aur request ko asynchronous banata hai (true).
+                xhr.setRequestHeader('X-CSRF-Token', csrfToken);  // CSRF protection ke liye zaroori hai.
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+
+                //Ye code block ek event handler define karta hai jo XMLHttpRequest ka readyState badalne par chalaya jayega.
+                //Function dekhta hai ki kya request complete hai (readyState == 4) aur agar response status 200 (successful) hai toh,
+                //woh response text ko console mein log karta hai.
+                xhr.onreadystatechange = function(){
+                    if(xhr.readyState == 4 && xhr.status == 200){
+                        console.log(xhr.responseText);
+                    }
+                };
+                    //Ye line AJAX request ko server par specified parameters ke saath bhejta hai (params).
+                    // Request body mein data hota hai jo server ko process karne ke liye bheja jata hai.
+                    xhr.send(params);
+                });
             });
-        </script> --}}
 
+            cartMinusBtns.forEach(function(btn, index) {
+                btn.addEventListener('click', function() {
+                    let currentQuantity = parseInt(cartInputs[index].value);
+                    if (currentQuantity > 1) {
+                        cartInputs[index].value = currentQuantity - 1; // Decrement quantity by 1
+                        updateTotal(); // Update total after changing quantity
 
+                    /*  AJAX Request Bhejna */
+
+                    let productId = btn.getAttribute('data-product-id');
+                    let url = '/updateQuantity';
+                    let params = 'product_id=' + productId + '&quantity=' + (currentQuantity - 1);
+
+                    let csrfToken = document.querySelector('meta[name=csrf-token]').getAttribute('content');
+
+                    let xhr = new XMLHttpRequest();
+                    xhr.open('POST', url, true);
+                    xhr.setRequestHeader('X-CSRF-Token', csrfToken);
+                    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                    xhr.onreadystatechange = function(){
+                        if(xhr.readyState == 4 && xhr.status == 200){
+                            console.log(xhr.responseText);
+                        }
+                    };
+                        xhr.send(params);
+                    }
+                });
+            });
+
+            cartInputs.forEach(function(input, index) {
+                input.addEventListener('change', function() {
+                    updateTotal(); // Update total after changing quantity
+                });
+            });
+
+            // Initial update of total when the page loads
+            updateTotal();
+    </script>
 
     <!-- feature-area-start -->
     <section class="feature-area mainfeature__bg grey-bg pt-50 pb-40" data-background="{{asset('webside/assets/img/shape/footer-shape-1.svg')}}">
@@ -201,3 +287,4 @@
 </main>
 
 @endsection
+

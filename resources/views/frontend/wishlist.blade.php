@@ -9,6 +9,23 @@
 
             @include('Includes.Admin.alert')
 
+            {{-- @if ($errors->any())
+                <div class="alert alert-danger" id="alert-remove">
+                    @foreach ($errors->all() as $error)
+                    <strong>{{ $error }}</strong>
+                    @endforeach
+                </div>
+            @endif
+
+            <script>
+                setTimeout(function(){
+                    var alertremove = document.getElementById('alert-remove');
+                    if(alertremove){
+                        alertremove.remove();
+                    }
+                }, 3000);
+            </script> --}}
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="tp-breadcrumb__content">
@@ -37,13 +54,14 @@
                                         <th class="product-thumbnail">Product Images</th>
                                         <th class="cart-product-name">Product's Name</th>
                                         <th class="product-price">Price</th>
-                                        <th class="product-quantity">Quantity</th>
-                                        <th class="product-subtotal">Total Price</th>
+                                        {{-- <th class="product-quantity">Quantity</th> --}}
+                                        {{-- <th class="product-subtotal">Total Price</th> --}}
                                         <th class="product-add-to-cart">Add To Cart</th>
                                         <th class="product-remove">Remove</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+
                                     @foreach ($wishlistItems as $product)
                                     <tr>
                                         <td class="product-thumbnail">
@@ -53,20 +71,20 @@
                                             <span>{{$product->product->product_name}}</span>
                                         </td>
                                         <td class="product-price">
-                                            <span class="amount fw-bold"> ₹ {{$product->product->price}} </span>
+                                            <span class="amount fw-bold">
+                                            <i class="fas fa-rupee-sign"></i>
+                                            {{$product->product->price}} </span>
                                         </td>
-                                        <td class="product-quantity">
-                                            <span class="cart-minus">-</span>
-                                            <input class="cart-input" type="text" value="1">
-                                            <span class="cart-plus">+</span>
+
+                                         <td class="product-add-to-cart">
+                                            <a href="{{ route('wishlist') }}" class="tp-btn tp-color-btn tp-wish-cart banner-animation" style="text-decoration:none;">
+                                                {{-- <button class="tp-btn tp-color-btn tp-wish-cart banner-animation"> --}}
+                                                    Add To Cart
+                                                {{-- </button> --}}
+                                            </a>
                                         </td>
-                                        <td class="product-subtotal">
-                                            <span class="amount fw-bold"> ₹ 789.00 </span>
-                                        </td>
-                                        <td class="product-add-to-cart">
-                                        <button class="tp-btn tp-color-btn tp-wish-cart banner-animation">Add To
-                                            Cart</button>
-                                        </td>
+
+
                                         <td class="product-remove">
                                         <a href="{{ route('removeToWishlist', $product->id) }}" onclick="return confirm('Are You sure you want to Delete Wishlist ?');">
                                             <i class="fa fa-trash text-black"></i></a>

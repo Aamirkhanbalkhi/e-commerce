@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ShopController;
 use App\Http\Controllers\Frontend\homeController;
 use App\Http\Controllers\Frontend\wishlistController;
+use App\Http\Controllers\Frontend\checkController;
+use App\Http\Controllers\Frontend\cartController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -92,7 +94,17 @@ route::match(['get', 'post'], '/remove-wishlist/{wishlistId}', [wishlistControll
 route::match(['get', 'post'], '/shop-cartlists', [wishlistController::class, 'cart'])->name('cart');
 route::match(['get', 'post'], '/add-to-cart/{id?}', [wishlistController::class, 'addToCart'])->name('add.cart');
 route::match(['get', 'post'], '/remove-cart/{cartId}', [wishlistController::class, 'removeCart'])->name('removeToCart');
+route::match(['get', 'post'], '/checkout', [checkController::class, 'checkout'])->name('checkout');
+route::match(['get', 'post'], '/add-billing', [checkController::class, 'addbilling'])->name('addbilling');
 
+// route::match(['get', 'post'], '/edit-address/{id}', [checkController::class, 'editaddress'])->name('edit.address');
+route::match(['get', 'post'], '/change-address', [checkController::class, 'changeaddress'])->name('change.address');
+
+route::match(['get', 'post'], 'order-summary', [checkController::class, 'ordersummary'])->name('order.summary');
+
+route::match(['get', 'post'], '/updateQuantity', [cartController::class, 'updateQuantity'])->name('update.Quantity');
+
+route::match(['get', 'post'], '/show-product', [checkController::class, 'showproduct'])->name('show.product');
 
 Route::get('/', function () {
     return view('auth.login');

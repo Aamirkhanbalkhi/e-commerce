@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 
 class homeController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -66,57 +65,34 @@ class homeController extends Controller
     // PRODUCT LIST FUNCTION
     public function productList($categoryName)
     {
-<<<<<<< HEAD
-        $categorys = Category::all();
-        $wishlistno =  wishlist::where('user_id', auth()->id())->count();
-        $cartno =  cart::where('user_id', auth()->id())->count();
-
-        $detaillist = Product::join('category', 'products.category_id', '=', 'category.id')
-=======
         $data['categorys'] = Category::all();
         $data['wishlistno'] =  wishlist::where('user_id', auth()->id())->count();
         $data['cartno'] =  cart::where('user_id', auth()->id())->count();
 
         $data['detaillist'] = Product::join('category', 'products.category_id', '=', 'category.id')
->>>>>>> d65d244 (first commit)
             ->where('category.category_slug', $categoryName)
             ->where('products.status', 'In Stock')
             ->get();
 
-<<<<<<< HEAD
-        return view('frontend.product-list', compact('categorys', 'detaillist', 'wishlistno', 'cartno'));
-=======
         return view('frontend.product-list', $data);
->>>>>>> d65d244 (first commit)
+
     }
 
     // PRODUT DETAIL FUNCTION
     public function productDetails($productDetail)
     {
-<<<<<<< HEAD
-        $cartno =  cart::where('user_id', auth()->id())->count();
-        $wishlistno =  wishlist::where('user_id', auth()->id())->count();
-        $user = User::first();
-        $categorys = Category::all();
-        // dd($user);
-        $productDetail = Product::join('category', 'products.category_id', '=', 'category.id')
-=======
         $data['cartno'] =  cart::where('user_id', auth()->id())->count();
         $data['wishlistno'] =  wishlist::where('user_id', auth()->id())->count();
         $data['user'] = User::first();
         $data['categorys'] = Category::all();
         // dd($user);
         $data['productDetail'] = Product::join('category', 'products.category_id', '=', 'category.id')
->>>>>>> d65d244 (first commit)
             ->where('products.reference', $productDetail)
             // ->where('products.status', 'In Stock')
             ->select('products.*')
             ->first();
         // dd($productDetail);
-<<<<<<< HEAD
-        return view('frontend.product-detail', compact('categorys', 'user', 'productDetail', 'wishlistno', 'cartno'));
-=======
+
         return view('frontend.product-detail', $data);
->>>>>>> d65d244 (first commit)
     }
 }

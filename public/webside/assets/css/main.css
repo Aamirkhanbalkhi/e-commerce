@@ -6513,17 +6513,18 @@ td.product-thumbnail img {
  .product-quantity .cart-plus, .product-quantity .cart-minus {
   width: 25px;
   height: 30px;
-  /* border: 1px solid var(--tp-border-1); */
+  border: 1px solid var(--tp-border-1);
   display: inline-block;
   vertical-align: middle;
   text-align: center;
   font-size: 14px;
 }
-/* .product-quantity .cart-plus:hover, .product-quantity .cart-minus:hover {
+
+.product-quantity .cart-plus:hover, .product-quantity .cart-minus:hover {
   cursor: pointer;
   color: var(--tp-common-white);
   background: var(--tp-heading-secondary);
-}  */
+}
 
 /* .cart-input {
   height: 30px;
