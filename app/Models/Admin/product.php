@@ -66,8 +66,7 @@ class product extends Model
             }
         });
     }
-
-
+    
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -76,8 +75,4 @@ class product extends Model
     {
         return $this->hasMany(wishlist::class);
     }
-    // public function carts()
-    // {
-    //     return $this->hasMany(cart::class);
-    // }
 }

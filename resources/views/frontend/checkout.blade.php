@@ -11,7 +11,7 @@
               <div class="col-lg-12">
                  <div class="tp-breadcrumb__content">
                     <div class="tp-breadcrumb__list">
-                       <span class="tp-breadcrumb__active"><a href="index.html">Home</a></span>
+                       <span class="tp-breadcrumb__active"><a href="{{ route('home.page')}}">Home</a></span>
                        <span class="dvdr">/</span>
                        <span>Checkout</span>
                     </div>
@@ -213,7 +213,7 @@
 
                                     @foreach ($productshow as $product)
                                             <div>
-                                                <p>Product Name: {{ $product->product_name }}</p>
+                                                <p><b>Product Name:</b> {{ $product->product_name }}</p>
                                                 <p>Quantity: {{ $product->quantity }}</p>
                                                 <p>Total Price: {{ $product->updated_price }}</p>
                                             </div>
@@ -228,7 +228,7 @@
 
                                 <tr class="order-total">
                                 <strong>
-                                        <th><big>Order Total</big></th>
+                                        <th><big><b>Order Total</b></big></th>
                                 <td>
                                        <i class="fas fa-rupee-sign"></i>
                                     <span>{{ $totalprice }}</span>
@@ -290,7 +290,7 @@
                              </div>
                           </div>
                           <div class="order-button-payment mt-20">
-                             <a href="{{ route('order.summary') }}"><button type="button" class="tp-btn tp-color-btn w-100 banner-animation">Place
+                             <a href="{{ route('addorder') }}"><button type="button" class="tp-btn tp-color-btn w-100 banner-animation">Place
                                 order</button></a>
                           </div>
                        </div>

@@ -98,7 +98,7 @@
                                     <input type="text" id="grand-total-input" class="grand_total" value="1">
                                     </span></li>
                                 </ul>
-                                    <a href="{{ route('show.product') }}" class="tp-btn tp-color-btn banner-animation">Proceed to
+                                    <a href="{{ route('check.product') }}" class="tp-btn tp-color-btn banner-animation">Proceed to
                                     Checkout</a>
                                 </div>
                             </div>
@@ -163,7 +163,6 @@
                 xhr.open('POST', url, true);    //request ko initialize karta hai. Isme HTTP method ('POST'), URL (url) aur request ko asynchronous banata hai (true).
                 xhr.setRequestHeader('X-CSRF-Token', csrfToken);  // CSRF protection ke liye zaroori hai.
                 xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
 
                 //Ye code block ek event handler define karta hai jo XMLHttpRequest ka readyState badalne par chalaya jayega.
                 //Function dekhta hai ki kya request complete hai (readyState == 4) aur agar response status 200 (successful) hai toh,

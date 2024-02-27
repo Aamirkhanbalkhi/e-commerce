@@ -12,6 +12,7 @@ use App\Models\cart;
 use App\Models\User;
 use App\Models\wishlist;
 use App\Models\order;
+use App\Models\orderAddress;
 
 class checkController extends Controller
 {
@@ -36,6 +37,7 @@ class checkController extends Controller
                         ->withInput();
             }
 
+        ## Bill create code
         $order = $request->all();
         // dd($order);
 
@@ -43,13 +45,14 @@ class checkController extends Controller
         return redirect()->back()->withStatus('Your Inforamtion Saved👍Successfully!');
     }
 
-    public function showproduct()
+    ## Function to show productname and quantity
+
+    public function checkproduct()
     {
         $data['cartno'] =  cart::where('user_id', auth()->id())->count();
         $data['wishlistno'] =  wishlist::where('user_id', auth()->id())->count();
         $data['user'] = User::first();
         $data['categorys'] = Category::all();
-
 
         ## Table products and carts join
 
@@ -62,8 +65,44 @@ class checkController extends Controller
         return view('frontend.checkout', $data);
     }
 
-    public function ordersummary()
+    ## Function to add orderAddress
+
+    public function addorder(Request $request)
     {
-        return view('frontend.order-summary');
+        // dd($request);
+
+        $addorder = DB::table('orders')
+        ->leftjoin('order_address', 'orders.id', '=', 'order_address.order_id')
+        ->leftjoin('users', 'users.id', '=', 'order_address.user_id')
+        ->select('orders.address as order_address', 'users.id as user_id')
+        ->get();
+
+        // dd($data['cartno'] , $addorder);
+
+        $orderData = [];
+
+        foreach ($addorder as $order) {
+
+            // already add same address then address not add
+            $existingaddress = orderAddress::where('address', $order->order_address)->exists();
+
+            // if not add same address
+            if(!$existingaddress){
+
+                // then add new address in database
+                $orderData[] = [
+                    'address' => $order->order_address,
+                ];
+            }
+        }
+
+        orderAddress::insert($orderData);
+        return view('frontend.thank-you');
+
     }
+
+    // public function ordersummary()
+    // {
+    //     return view('frontend.order-summary');
+    // }
 }

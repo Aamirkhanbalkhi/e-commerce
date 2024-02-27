@@ -115,7 +115,6 @@
 <script src="{{asset('webside/assets/js/ajax-form.js')}}"></script>
 <script src="{{asset('webside/assets/js/meanmenu.js')}}"></script>
 <script src="{{asset('webside/assets/js/main.js')}}"></script>
-<script src="{{asset('webside/assets/js/grand-total.js')}}"></script>
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 
